@@ -15,9 +15,9 @@ import java.util.List;
 
 public class CurrencyLoader {
     private static final String API_KEY = "78f2ad1a2e76eb7ca408357a";
+    private static final String API_URL = "https://v6.exchangerate-api.com/v6/" + API_KEY + "/";
 
     private URLConnection openConnection() throws IOException {
-        String API_URL = "https://v6.exchangerate-api.com/v6/" + API_KEY + "/";
         return new URL(API_URL + "codes").openConnection();
     }
 
