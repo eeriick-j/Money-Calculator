@@ -2,8 +2,8 @@ package io;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import models.Currency;
-import models.ExchangeRate;
+import model.Currency;
+import model.ExchangeRate;
 
 import java.io.IOException;
 import java.io.InputStream;

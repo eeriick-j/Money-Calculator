@@ -2,8 +2,8 @@ package app;
 
 import io.CurrencyLoader;
 import io.ExchangeRateLoader;
-import models.Currency;
-import models.ExchangeRate;
+import model.Currency;
+import model.ExchangeRate;
 
 import java.io.IOException;
 import java.util.List;
