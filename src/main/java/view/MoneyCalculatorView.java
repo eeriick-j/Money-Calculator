@@ -7,6 +7,7 @@ import view.dialog.MoneyDialog;
 import view.display.ResultDisplay;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class MoneyCalculatorView extends JFrame {
@@ -14,7 +15,7 @@ public class MoneyCalculatorView extends JFrame {
     public MoneyCalculatorView(MoneyCalculatorController controller) {
         setTitle("Money Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 500);
+        setSize(600, 320);
         setLocationRelativeTo(null);
 
         List<Currency> currencies = controller.getCurrencies();
@@ -43,13 +44,12 @@ public class MoneyCalculatorView extends JFrame {
                     selector.getFrom(),
                     selector.getTo());
 
-            display.setResult(String.valueOf(conversion));
+            display.setResult(String.valueOf(conversion), String.valueOf(selector.getTo().code()));
         }
         catch (Exception e) {
-            display.setResult("Error en la conversión");
+            display.setResult("Error en la conversión", "");
         }
     }
-
     private JPanel buildPanel(
             CurrencyDialog selector,
             MoneyDialog input,
@@ -58,11 +58,18 @@ public class MoneyCalculatorView extends JFrame {
     ) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+        addRow(panel, selector);
+        addRow(panel, input);
+        addRow(panel, button);
+        addRow(panel, display);
 
-        panel.add(selector);
-        panel.add(input);
-        panel.add(button);
-        panel.add(display);
         return panel;
+    }
+
+    private void addRow(JPanel parent, JComponent component) {
+        JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        row.add(component);
+        parent.add(row);
     }
 }

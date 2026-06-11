@@ -11,19 +11,37 @@ public class CurrencyDialog extends JPanel {
     private final JComboBox<Currency> toBox = new JComboBox<>();
 
     public CurrencyDialog(List<Currency> currencies) {
-        setLayout(new FlowLayout());
-
         for (Currency c : currencies) {
             fromBox.addItem(c);
             toBox.addItem(c);
         }
 
-        add(new JLabel("From:"));
-        add(fromBox);
-        add(new JLabel("To:"));
-        add(toBox);
-    }
+        setLayout(new GridBagLayout());
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5,5,25,5);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        add(new JLabel("From:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        add(fromBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        add(new JLabel("To:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        add(toBox, gbc);
+    }
     public Currency getFrom() { return (Currency) fromBox.getSelectedItem(); }
     public Currency getTo() { return (Currency) toBox.getSelectedItem(); }
 }

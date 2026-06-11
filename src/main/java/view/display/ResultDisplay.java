@@ -9,7 +9,7 @@ public class ResultDisplay extends JPanel {
         add(resultLabel);
     }
 
-    public void setResult(String text) {
-        resultLabel.setText(text);
+    public void setResult(String text, String to) {
+        resultLabel.setText(text + " " + to);
     }
 }
