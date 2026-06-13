@@ -28,13 +28,30 @@ public class MoneyCalculatorView extends JFrame {
         JButton convertButton = new JButton("Convert");
 
         convertButton.addActionListener(e -> {
-                Command command = new MoneyCalculatorCommand(
-                    controller, input.getAmount(), selector.getFrom(), selector.getTo()
-                );
-                double conversion = command.execute();
-                display.setResult(String.valueOf(conversion), String.valueOf(selector.getTo().code()));
+            String amountText = input.getAmount();
+            if (amountText == null || amountText.isBlank()) {
+                display.setResult("Enter an amount", "");
+                return;
             }
-        );
+
+            Command command = new MoneyCalculatorCommand(
+                    controller,
+                    amountText,
+                    selector.getFrom(),
+                    selector.getTo()
+            );
+            try {
+                double conversion = command.execute();
+                display.setResult(
+                        String.valueOf(conversion),
+                        String.valueOf(selector.getTo().code())
+                );
+            } catch (NumberFormatException ex) {
+                display.setResult("Invalid amount format", "");
+            } catch (Exception ex) {
+                display.setResult("Verify amount", "");
+            }
+        });
 
         JPanel panel = buildPanel(selector, input, convertButton, display);
         add(panel);
