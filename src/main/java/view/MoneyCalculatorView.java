@@ -1,5 +1,7 @@
 package view;
 
+import control.Command;
+import control.MoneyCalculatorCommand;
 import control.MoneyCalculatorController;
 import model.Currency;
 import view.dialog.CurrencyDialog;
@@ -21,35 +23,23 @@ public class MoneyCalculatorView extends JFrame {
         List<Currency> currencies = controller.getCurrencies();
         CurrencyDialog selector = new CurrencyDialog(currencies);
         MoneyDialog input = new MoneyDialog();
+
         ResultDisplay display = new ResultDisplay();
         JButton convertButton = new JButton("Convert");
 
-        convertButton.addActionListener(e ->
-                onConvert(controller, input, selector, display)
+        convertButton.addActionListener(e -> {
+                Command command = new MoneyCalculatorCommand(
+                    controller, input.getAmount(), selector.getFrom(), selector.getTo()
+                );
+                double conversion = command.execute();
+                display.setResult(String.valueOf(conversion), String.valueOf(selector.getTo().code()));
+            }
         );
 
         JPanel panel = buildPanel(selector, input, convertButton, display);
         add(panel);
     }
 
-    private void onConvert(
-            MoneyCalculatorController controller,
-            MoneyDialog input,
-            CurrencyDialog selector,
-            ResultDisplay display
-    ) {
-        try {
-            double conversion = controller.convert(
-                    input.getAmount(),
-                    selector.getFrom(),
-                    selector.getTo());
-
-            display.setResult(String.valueOf(conversion), String.valueOf(selector.getTo().code()));
-        }
-        catch (Exception e) {
-            display.setResult("Error en la conversión", "");
-        }
-    }
     private JPanel buildPanel(
             CurrencyDialog selector,
             MoneyDialog input,
@@ -63,7 +53,6 @@ public class MoneyCalculatorView extends JFrame {
         addRow(panel, input);
         addRow(panel, button);
         addRow(panel, display);
-
         return panel;
     }
 
