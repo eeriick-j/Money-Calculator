@@ -1,6 +1,6 @@
 # 💱 Money Calculator
 
-Aplicación de escritorio en Java para conversión de divisas en tiempo real, siguiendo el patrón de arquitectura MVP (Model-View-Presenter) y usando Command Pattern para encapsular la lógica de conversión.
+Aplicación en Java para conversión de divisas en tiempo real, siguiendo el patrón de arquitectura MVP (Model-View-Presenter) y usando Command Pattern para encapsular la lógica de conversión.
 
 Permite seleccionar dos monedas, introducir un importe y obtener el resultado usando una API externa de tipos de cambio.
 
