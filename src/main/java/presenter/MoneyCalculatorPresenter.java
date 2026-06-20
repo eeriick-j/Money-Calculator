@@ -1,4 +1,4 @@
-package control;
+package presenter;
 
 import io.CurrencyLoader;
 import io.ExchangeRateLoader;
@@ -8,10 +8,10 @@ import model.ExchangeRate;
 import java.io.IOException;
 import java.util.List;
 
-public class MoneyCalculatorController {
+public class MoneyCalculatorPresenter {
     private final List<Currency> currencies;
 
-    public MoneyCalculatorController() throws IOException {
+    public MoneyCalculatorPresenter() throws IOException {
         this.currencies = new CurrencyLoader().loadAll();
     }
 

@@ -1,18 +1,18 @@
-package control;
+package presenter;
 
 import model.Currency;
 
 public class MoneyCalculatorCommand implements Command {
-    MoneyCalculatorController controller;
+    MoneyCalculatorPresenter presenter;
     String amountText;
     Currency from;
     Currency to;
 
-    public MoneyCalculatorCommand(MoneyCalculatorController controller,
+    public MoneyCalculatorCommand(MoneyCalculatorPresenter presenter,
                                   String amountText,
                                   Currency from,
                                   Currency to) {
-        this.controller = controller;
+        this.presenter = presenter;
         this.amountText = amountText;
         this.from = from;
         this.to = to;
@@ -20,6 +20,6 @@ public class MoneyCalculatorCommand implements Command {
 
     @Override
     public double execute() {
-        return this.controller.convert(this.amountText, this.from, this.to);
+        return this.presenter.convert(this.amountText, this.from, this.to);
     }
 }

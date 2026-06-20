@@ -1,8 +1,8 @@
 package view;
 
-import control.Command;
-import control.MoneyCalculatorCommand;
-import control.MoneyCalculatorController;
+import presenter.Command;
+import presenter.MoneyCalculatorCommand;
+import presenter.MoneyCalculatorPresenter;
 import model.Currency;
 import view.dialog.CurrencyDialog;
 import view.dialog.MoneyDialog;
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class MoneyCalculatorView extends JFrame {
 
-    public MoneyCalculatorView(MoneyCalculatorController controller) {
+    public MoneyCalculatorView(MoneyCalculatorPresenter presenter) {
         setTitle("Money Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 320);
         setLocationRelativeTo(null);
 
-        List<Currency> currencies = controller.getCurrencies();
+        List<Currency> currencies = presenter.getCurrencies();
         CurrencyDialog selector = new CurrencyDialog(currencies);
         MoneyDialog input = new MoneyDialog();
 
@@ -35,7 +35,7 @@ public class MoneyCalculatorView extends JFrame {
             }
 
             Command command = new MoneyCalculatorCommand(
-                    controller,
+                    presenter,
                     amountText,
                     selector.getFrom(),
                     selector.getTo()
