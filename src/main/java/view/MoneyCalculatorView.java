@@ -1,7 +1,5 @@
 package view;
 
-import presenter.Command;
-import presenter.MoneyCalculatorCommand;
 import presenter.MoneyCalculatorPresenter;
 import model.Currency;
 import view.dialog.CurrencyDialog;
@@ -34,14 +32,9 @@ public class MoneyCalculatorView extends JFrame {
                 return;
             }
 
-            Command command = new MoneyCalculatorCommand(
-                    presenter,
-                    amountText,
-                    selector.getFrom(),
-                    selector.getTo()
-            );
+            double conversion = presenter.convert(amountText, selector.getFrom(), selector.getTo());
+
             try {
-                double conversion = command.execute();
                 display.setResult(
                         String.valueOf(conversion),
                         String.valueOf(selector.getTo().code())

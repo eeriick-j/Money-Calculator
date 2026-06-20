@@ -10,9 +10,11 @@ import java.util.List;
 
 public class MoneyCalculatorPresenter {
     private final List<Currency> currencies;
+    private final ExchangeRateLoader rateLoader;
 
-    public MoneyCalculatorPresenter() throws IOException {
-        this.currencies = new CurrencyLoader().loadAll();
+    public MoneyCalculatorPresenter(List<Currency> currencies, ExchangeRateLoader rateLoader) throws IOException {
+        this.currencies = currencies;
+        this.rateLoader = rateLoader;
     }
 
     public List<Currency> getCurrencies() {
@@ -20,8 +22,7 @@ public class MoneyCalculatorPresenter {
     }
 
     public double convert(String amountText, Currency from, Currency to) {
-        double amount = Double.parseDouble(amountText);
-        double rate = new ExchangeRateLoader().load(from, to).rate();
-        return new ExchangeRate(from, to, rate).convert(amount);
+        Command command = new MoneyCalculatorCommand(amountText, from, to);
+        return command.execute(rateLoader);
     }
 }

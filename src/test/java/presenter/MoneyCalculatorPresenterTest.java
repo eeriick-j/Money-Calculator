@@ -1,5 +1,7 @@
 package presenter;
 
+import io.CurrencyLoader;
+import io.ExchangeRateLoader;
 import model.Currency;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoneyCalculatorPresenterTest {
     @Test
     void convertShouldReturnCorrectConversion() throws Exception {
-        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter();
+        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter(new CurrencyLoader().loadAll(),new ExchangeRateLoader());
         List<Currency> currencies = presenter.getCurrencies();
         Currency from = currencies.get(0);
         Currency to = currencies.get(1);
@@ -21,7 +23,7 @@ class MoneyCalculatorPresenterTest {
 
     @Test
     void convertShouldFailIfInputIsEmpty() throws Exception {
-        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter();
+        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter(new CurrencyLoader().loadAll(),new ExchangeRateLoader());
         List<Currency> currencies = presenter.getCurrencies();
         Currency from = currencies.get(0);
         Currency to = currencies.get(1);
@@ -33,7 +35,7 @@ class MoneyCalculatorPresenterTest {
 
     @Test
     void convertShouldFailIfInputIsNotANumber() throws Exception {
-        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter();
+        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter(new CurrencyLoader().loadAll(),new ExchangeRateLoader());
         List<Currency> currencies = presenter.getCurrencies();
         Currency from = currencies.get(0);
         Currency to = currencies.get(1);

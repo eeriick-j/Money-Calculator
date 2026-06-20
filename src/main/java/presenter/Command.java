@@ -1,5 +1,7 @@
 package presenter;
 
+import io.ExchangeRateLoader;
+
 public interface Command {
-    double execute();
+    double execute(ExchangeRateLoader rateLoader);
 }
