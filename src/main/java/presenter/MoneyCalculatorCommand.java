@@ -4,22 +4,21 @@ import io.ExchangeRateLoader;
 import model.Currency;
 
 public class MoneyCalculatorCommand implements Command {
-    String amountText;
+    double amount;
     Currency from;
     Currency to;
 
-    public MoneyCalculatorCommand(String amountText,
+    public MoneyCalculatorCommand(double amount,
                                   Currency from,
                                   Currency to) {
-        this.amountText = amountText;
+        this.amount = amount;
         this.from = from;
         this.to = to;
     }
 
     @Override
-    public double execute(ExchangeRateLoader exchangeRateLoader) {
-        double amount = Double.parseDouble(amountText);
+    public Conversion execute(ExchangeRateLoader exchangeRateLoader) {
         double rate = exchangeRateLoader.load(from, to).rate();
-        return amount * rate;
+        return Conversion.ok(amount * rate);
     }
 }

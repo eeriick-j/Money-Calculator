@@ -1,9 +1,7 @@
 package presenter;
 
-import io.CurrencyLoader;
 import io.ExchangeRateLoader;
 import model.Currency;
-import model.ExchangeRate;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,8 +19,16 @@ public class MoneyCalculatorPresenter {
         return this.currencies;
     }
 
-    public double convert(String amountText, Currency from, Currency to) {
-        Command command = new MoneyCalculatorCommand(amountText, from, to);
+    public Conversion convert(String amountText, Currency from, Currency to) {
+        if (amountText == null || amountText.isBlank()) return Conversion.error("Empty amount");
+
+        final double amount;
+        try {
+            amount = Double.parseDouble(amountText);
+        } catch (NumberFormatException e) {
+            return Conversion.error("Invalid amount");
+        }
+        Command command = new MoneyCalculatorCommand(amount, from, to);
         return command.execute(rateLoader);
     }
 }

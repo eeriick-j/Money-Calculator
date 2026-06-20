@@ -1,5 +1,6 @@
 package view;
 
+import presenter.Conversion;
 import presenter.MoneyCalculatorPresenter;
 import model.Currency;
 import view.dialog.CurrencyDialog;
@@ -26,24 +27,17 @@ public class MoneyCalculatorView extends JFrame {
         JButton convertButton = new JButton("Convert");
 
         convertButton.addActionListener(e -> {
-            String amountText = input.getAmount();
-            if (amountText == null || amountText.isBlank()) {
-                display.setResult("Enter an amount", "");
-                return;
-            }
+            Conversion conversion = presenter.convert(
+                    input.getAmount(),
+                    selector.getFrom(),
+                    selector.getTo()
+            );
+            if (!conversion.success()) {display.setResult(conversion.error(), ""); return;}
 
-            double conversion = presenter.convert(amountText, selector.getFrom(), selector.getTo());
-
-            try {
-                display.setResult(
-                        String.valueOf(conversion),
-                        String.valueOf(selector.getTo().code())
-                );
-            } catch (NumberFormatException ex) {
-                display.setResult("Invalid amount format", "");
-            } catch (Exception ex) {
-                display.setResult("Verify amount", "");
-            }
+            display.setResult(
+                    String.valueOf(conversion.value()),
+                    String.valueOf(selector.getTo().code())
+            );
         });
 
         JPanel panel = buildPanel(selector, input, convertButton, display);
