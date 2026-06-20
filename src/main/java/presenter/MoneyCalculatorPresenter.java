@@ -3,14 +3,13 @@ package presenter;
 import io.ExchangeRateLoader;
 import model.Currency;
 
-import java.io.IOException;
 import java.util.List;
 
 public class MoneyCalculatorPresenter {
     private final List<Currency> currencies;
     private final ExchangeRateLoader rateLoader;
 
-    public MoneyCalculatorPresenter(List<Currency> currencies, ExchangeRateLoader rateLoader) throws IOException {
+    public MoneyCalculatorPresenter(List<Currency> currencies, ExchangeRateLoader rateLoader) {
         this.currencies = currencies;
         this.rateLoader = rateLoader;
     }
@@ -28,7 +27,7 @@ public class MoneyCalculatorPresenter {
         } catch (NumberFormatException e) {
             return Conversion.error("Invalid amount");
         }
-        Command command = new MoneyCalculatorCommand(amount, from, to);
-        return command.execute(rateLoader);
+        Command command = new MoneyCalculatorCommand(amount, from, to, rateLoader);
+        return command.execute();
     }
 }
