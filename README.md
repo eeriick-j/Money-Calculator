@@ -1,6 +1,6 @@
 # 💱 Money Calculator
 
-Aplicación en Java para conversión de divisas en tiempo real, siguiendo el patrón de arquitectura MVP (Model-View-Presenter) y usando Command Pattern para encapsular la lógica de conversión.
+Aplicación en Java para conversión de divisas en tiempo real, siguiendo el patrón de arquitectura MVP (Model-View-Controller) y usando Command Pattern para encapsular la lógica de conversión.
 
 Permite seleccionar dos monedas, introducir un importe y obtener el resultado usando una API externa de tipos de cambio.
 
@@ -22,11 +22,11 @@ src/main/java
     │     ├── ExchangeRate.java
     │     └── Money.java
     │
-    ├── presenter/
+    ├── control/
     │     ├── Command.java
     │     ├── Conversion.java
     │     ├── MoneyCalculatorCommand.java
-    │     └── MoneyCalculatorPresenter.java
+    │     └── MoneyCalculatorController.java
     │
     └── view/
           ├── dialog/
@@ -45,7 +45,7 @@ src/main/java
 
 ## 🏛️ Arquitectura MVP + Command Pattern
 
-Este proyecto sigue el patrón **Model-View-Presenter**, con uso de **Command Pattern** para encapsular la lógica de conversión.
+Este proyecto sigue el patrón **Model-View-Controller**, con uso de **Command Pattern** para encapsular la lógica de conversión.
 
 En una arquitectura sin separación de capas, la UI mezcla lógica de negocio con componentes visuales, lo que hace el código difícil de testear y mantener.
 
@@ -53,7 +53,7 @@ Con MVP:
 
 - **Model** → datos del dominio (Currency, ExchangeRate)
 - **View** → solo interfaz gráfica (Swing), sin lógica de negocio
-- **Presenter** → coordina flujo, valida input y ejecuta la lógica
+- **Controller** → coordina flujo, valida input y ejecuta la lógica
 - **IO** → acceso a API externa (HTTP)
 - **Command** → encapsula la operación de conversión
 
@@ -62,7 +62,7 @@ Con MVP:
 ## 📦 Descripción de cada clase
 
 ### app/Main.java
-Punto de entrada. Inyecta dependencias (loaders + presenter + view) y arranca la aplicación.
+Punto de entrada. Inyecta dependencias (loaders + controller + view) y arranca la aplicación.
 
 ---
 
@@ -81,7 +81,7 @@ Representa la tasa de cambio entre dos monedas.
 
 ---
 
-### presenter/Conversion.java
+### control/Conversion.java
 Resultado de la operación:
 
 - success → si la operación fue correcta
@@ -90,12 +90,12 @@ Resultado de la operación:
 
 ---
 
-### presenter/Command.java
+### control/Command.java
 Interfaz del patrón Command:
 
 ---
 
-### presenter/MoneyCalculatorCommand.java
+### control/MoneyCalculatorCommand.java
 
 Encapsula la lógica de conversión:
 
@@ -105,7 +105,7 @@ Encapsula la lógica de conversión:
 
 ---
 
-### presenter/MoneyCalculatorPresenter.java
+### control/MoneyCalculatorController.java
 
 Orquesta el flujo de la aplicación:
 
@@ -133,7 +133,7 @@ Obtiene el tipo de cambio entre dos monedas desde una API externa.
 Ventana principal Swing:
 
 - recoge input del usuario  
-- llama al Presenter  
+- llama al Controller  
 - muestra resultado o error  
 
 ---
