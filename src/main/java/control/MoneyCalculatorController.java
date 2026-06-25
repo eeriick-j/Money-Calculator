@@ -1,15 +1,15 @@
-package presenter;
+package control;
 
 import io.ExchangeRateLoader;
 import model.Currency;
 
 import java.util.List;
 
-public class MoneyCalculatorPresenter {
+public class MoneyCalculatorController {
     private final List<Currency> currencies;
     private final ExchangeRateLoader rateLoader;
 
-    public MoneyCalculatorPresenter(List<Currency> currencies, ExchangeRateLoader rateLoader) {
+    public MoneyCalculatorController(List<Currency> currencies, ExchangeRateLoader rateLoader) {
         this.currencies = currencies;
         this.rateLoader = rateLoader;
     }

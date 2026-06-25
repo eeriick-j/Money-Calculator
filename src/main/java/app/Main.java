@@ -2,18 +2,18 @@ package app;
 
 import io.CurrencyLoader;
 import io.ExchangeRateLoader;
-import presenter.MoneyCalculatorPresenter;
+import control.MoneyCalculatorController;
 import view.MoneyCalculatorView;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        MoneyCalculatorPresenter presenter = new MoneyCalculatorPresenter(
+        MoneyCalculatorController controller = new MoneyCalculatorController(
                 new CurrencyLoader().loadAll(),
                 new ExchangeRateLoader()
         );
-        MoneyCalculatorView view = new MoneyCalculatorView(presenter);
+        MoneyCalculatorView view = new MoneyCalculatorView(controller);
         view.setVisible(true);
     }
 }

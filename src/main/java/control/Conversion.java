@@ -1,4 +1,4 @@
-package presenter;
+package control;
 
 public record Conversion(boolean success, double value, String error) {
 

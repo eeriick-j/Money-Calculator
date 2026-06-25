@@ -1,4 +1,4 @@
-package presenter;
+package control;
 
 import io.ExchangeRateLoader;
 import model.Currency;
@@ -16,22 +16,22 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class MoneyCalculatorPresenterTest {
+class MoneyCalculatorControllerTest {
 
     @Mock
     ExchangeRateLoader loader;
-    MoneyCalculatorPresenter presenter;
+    MoneyCalculatorController controller;
     Currency usd = new Currency("USD", "Dollar");
     Currency eur = new Currency("EUR", "Euro");
 
     @BeforeEach
     void setUp() {
-        presenter = new MoneyCalculatorPresenter(List.of(usd, eur), loader);
+        controller = new MoneyCalculatorController(List.of(usd, eur), loader);
     }
 
     @Test
     void nullInputReturnsError() {
-        Conversion result = presenter.convert(null, usd, eur);
+        Conversion result = controller.convert(null, usd, eur);
 
         assertFalse(result.success());
         assertEquals("Empty amount", result.error());
@@ -39,7 +39,7 @@ class MoneyCalculatorPresenterTest {
 
     @Test
     void emptyInputReturnsError() {
-        Conversion result = presenter.convert("", usd, eur);
+        Conversion result = controller.convert("", usd, eur);
 
         assertFalse(result.success());
         assertEquals("Empty amount", result.error());
@@ -47,13 +47,13 @@ class MoneyCalculatorPresenterTest {
 
     @Test
     void blankInputReturnsError() {
-        Conversion result = presenter.convert("   ", usd, eur);
+        Conversion result = controller.convert("   ", usd, eur);
         assertFalse(result.success());
     }
 
     @Test
     void invalidInputReturnsError() {
-        Conversion result = presenter.convert("abc", usd, eur);
+        Conversion result = controller.convert("abc", usd, eur);
 
         assertFalse(result.success());
         assertEquals("Invalid amount", result.error());
@@ -61,7 +61,7 @@ class MoneyCalculatorPresenterTest {
 
     @Test
     void numberWithLettersReturnsError() {
-        Conversion result = presenter.convert("10a", usd, eur);
+        Conversion result = controller.convert("10a", usd, eur);
 
         assertFalse(result.success());
     }
@@ -71,7 +71,7 @@ class MoneyCalculatorPresenterTest {
         when(loader.load(usd, eur))
                 .thenReturn(new ExchangeRate(usd, eur, 2.0));
 
-        Conversion result = presenter.convert("10", usd, eur);
+        Conversion result = controller.convert("10", usd, eur);
 
         assertTrue(result.success());
         assertEquals(20.0, result.value());
@@ -81,15 +81,15 @@ class MoneyCalculatorPresenterTest {
     void decimalInputWorks() {
         when(loader.load(usd, eur)).thenReturn(new ExchangeRate(usd, eur, 1.5));
 
-        Conversion result = presenter.convert("2.5", usd, eur);
+        Conversion result = controller.convert("2.5", usd, eur);
         assertEquals(3.75, result.value());
     }
 
     @Test
-    void presenterCallsLoader() {
+    void controllerCallsLoader() {
         when(loader.load(usd, eur)).thenReturn(new ExchangeRate(usd, eur, 2.0));
 
-        presenter.convert("10", usd, eur);
+        controller.convert("10", usd, eur);
         verify(loader).load(usd, eur);
     }
 }

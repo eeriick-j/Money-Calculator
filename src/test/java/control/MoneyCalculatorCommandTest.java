@@ -1,4 +1,4 @@
-package presenter;
+package control;
 
 import io.ExchangeRateLoader;
 import model.Currency;
