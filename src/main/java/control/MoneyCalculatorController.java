@@ -2,6 +2,7 @@ package control;
 
 import io.ExchangeRateLoader;
 import model.Currency;
+import model.Money;
 
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class MoneyCalculatorController {
         } catch (NumberFormatException e) {
             return Conversion.error("Invalid amount");
         }
-        Command command = new MoneyCalculatorCommand(amount, from, to, rateLoader);
+
+        Command command = new MoneyCalculatorCommand(new Money(from, amount), to, rateLoader);
         return command.execute();
     }
 }

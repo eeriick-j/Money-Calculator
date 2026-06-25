@@ -48,6 +48,7 @@ class MoneyCalculatorControllerTest {
     @Test
     void blankInputReturnsError() {
         Conversion result = controller.convert("   ", usd, eur);
+
         assertFalse(result.success());
     }
 
@@ -68,13 +69,13 @@ class MoneyCalculatorControllerTest {
 
     @Test
     void validInputReturnsConversion() {
-        when(loader.load(usd, eur))
-                .thenReturn(new ExchangeRate(usd, eur, 2.0));
+        when(loader.load(usd, eur)).thenReturn(new ExchangeRate(usd, eur, 2.0));
 
         Conversion result = controller.convert("10", usd, eur);
 
         assertTrue(result.success());
-        assertEquals(20.0, result.value());
+        assertEquals(20.0, result.money().amount());
+        assertEquals(eur, result.money().currency());
     }
 
     @Test
@@ -82,7 +83,8 @@ class MoneyCalculatorControllerTest {
         when(loader.load(usd, eur)).thenReturn(new ExchangeRate(usd, eur, 1.5));
 
         Conversion result = controller.convert("2.5", usd, eur);
-        assertEquals(3.75, result.value());
+
+        assertEquals(3.75, result.money().amount());
     }
 
     @Test
@@ -90,6 +92,7 @@ class MoneyCalculatorControllerTest {
         when(loader.load(usd, eur)).thenReturn(new ExchangeRate(usd, eur, 2.0));
 
         controller.convert("10", usd, eur);
+
         verify(loader).load(usd, eur);
     }
 }

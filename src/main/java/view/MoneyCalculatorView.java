@@ -3,6 +3,7 @@ package view;
 import control.Conversion;
 import control.MoneyCalculatorController;
 import model.Currency;
+import model.Money;
 import view.dialog.CurrencyDialog;
 import view.dialog.MoneyDialog;
 import view.display.ResultDisplay;
@@ -32,13 +33,16 @@ public class MoneyCalculatorView extends JFrame {
                     selector.getFrom(),
                     selector.getTo()
             );
+
             if (!conversion.success()) {display.setResult(conversion.error(), ""); return;}
 
+            Money result = conversion.money();
             display.setResult(
-                    String.valueOf(conversion.value()),
-                    String.valueOf(selector.getTo().code())
+                    String.valueOf(result.amount()),
+                    result.currency().code()
             );
         });
+
 
         JPanel panel = buildPanel(selector, input, convertButton, display);
         add(panel);
