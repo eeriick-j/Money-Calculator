@@ -1,6 +1,6 @@
 # 💱 Money Calculator
 
-Aplicación en Java para conversión de divisas en tiempo real, siguiendo el patrón de arquitectura MVP (Model-View-Controller) y usando Command Pattern para encapsular la lógica de conversión.
+Aplicación en Java para conversión de divisas en tiempo real, siguiendo el patrón de arquitectura MVC (Model-View-Controller) y usando Command Pattern para encapsular la lógica de conversión.
 
 Permite seleccionar dos monedas, introducir un importe y obtener el resultado usando una API externa de tipos de cambio.
 
@@ -43,13 +43,13 @@ src/main/java
 
 ---
 
-## 🏛️ Arquitectura MVP + Command Pattern
+## 🏛️ Arquitectura MVC + Command Pattern
 
 Este proyecto sigue el patrón **Model-View-Controller**, con uso de **Command Pattern** para encapsular la lógica de conversión.
 
 En una arquitectura sin separación de capas, la UI mezcla lógica de negocio con componentes visuales, lo que hace el código difícil de testear y mantener.
 
-Con MVP:
+Con MVC:
 
 - **Model** → datos del dominio (Currency, ExchangeRate)
 - **View** → solo interfaz gráfica (Swing), sin lógica de negocio
@@ -161,7 +161,7 @@ Muestra el resultado o errores.
 - Conversión de divisas en tiempo real  
 - Selección de moneda origen y destino  
 - Validación de input y gestión de errores
-- Arquitectura MVP limpia  
+- Arquitectura MVC limpia  
 - Uso de Command Pattern  
 
 ---
